@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 const Header = ({ setSearchName }) => {
   const { location } = useLocation();
-  console.log(location);
+  // console.log(location);
   return (
     <header>
       <div className="container header">
@@ -13,20 +13,16 @@ const Header = ({ setSearchName }) => {
         </Link>
         <nav className="menu_container">
           <ul>
-            <Link to="/" className={location === "/" ? "active" : ""}>
-              <li>personnages</li>
+            <Link to="/">
+              <li className={location === "/" ? "active" : ""}>personnages</li>
             </Link>
-            <Link
-              to="/comics"
-              className={location === "/comics" ? "active" : ""}
-            >
-              <li>comics</li>
+            <Link to="/comics">
+              <li className={location === "/comics" ? "active" : ""}>comics</li>
             </Link>
-            <Link
-              to="/bookmark"
-              className={location === "/bookmark" ? "active" : ""}
-            >
-              <li>favoris</li>
+            <Link to="/bookmark">
+              <li className={location === "/bookmark" ? "active" : ""}>
+                favoris
+              </li>
             </Link>
           </ul>
         </nav>
