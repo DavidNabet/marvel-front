@@ -11,17 +11,18 @@ import Bookmark from "./containers/Bookmark";
 import "./App.css";
 
 function App() {
-  const [searchName, setSearchName] = useState("");
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [searchName, setSearchName] = useState("");
+  const [searchTitle, setSearchTitle] = useState("");
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(20);
-  // const limit = 100;
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:3200/characters", {
         params: {
+          name: searchName,
           limit: limit,
           skip: skip,
         },
@@ -33,20 +34,25 @@ function App() {
       setIsLoading(false);
     };
     fetchData();
-  }, [skip, limit]);
+  }, [searchName, skip, limit]);
 
   const handleSearchName = (e) => {
+    e.preventDefault();
     setSearchName(e.target.value);
   };
 
-  // const handleLimit = () => {
-  //   setCount(Math.ceil(data.count / data.limit))
-  // }
+  const handleSearchTitle = (e) => {
+    e.preventDefault();
+    setSearchTitle(e.target.value);
+  };
 
   return (
     <>
       <Router>
-        <Header setSearchName={handleSearchName} />
+        <Header
+          handleSearchPerso={handleSearchName}
+          handleSearchComic={handleSearchTitle}
+        />
         <Switch>
           <Route exact path="/">
             <Characters
@@ -68,7 +74,7 @@ function App() {
             <Login />
           </Route>
           <Route path="/comics">
-            <Comics />
+            <Comics title={searchTitle} />
           </Route>
           <Route path="/bookmark">
             <Bookmark />
