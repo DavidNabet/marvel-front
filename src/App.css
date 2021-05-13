@@ -1,0 +1,151 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --red: #ed1d24;
+  --black: #1a1b1d;
+  --lightgrey: #f5f5f5;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 1.4rem;
+}
+
+.container {
+  width: 1280px;
+  margin: 0 auto;
+}
+
+header {
+  width: 100%;
+  margin-top: 2rem;
+  /* border-bottom: 1px solid salmon; */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.header img {
+  width: 170px;
+}
+
+.menu_container {
+  flex: 1;
+  margin-left: 10rem;
+}
+
+.menu_container ul {
+  display: flex;
+}
+
+.menu_container a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.menu_container a.active,
+.menu_container a:active {
+  color: var(--red);
+}
+
+.menu_container a:hover {
+  color: var(--red);
+}
+
+.menu_container ul a li {
+  margin-right: 2rem;
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.menu_container ul a:last-child {
+  margin-right: 0;
+}
+
+.connect_container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* CHARACTERS - HOME */
+
+.characters_wrapper {
+  background-color: var(--lightgrey);
+  padding-top: 3rem;
+}
+
+.characters_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.characters__inner {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 1rem;
+  max-width: 290px;
+  width: 100%;
+  background-color: var(--black);
+  color: white;
+  text-align: left;
+  font-size: 1.6rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.characters__inner a {
+  color: inherit;
+}
+
+.characters__inner * {
+  transition: all 0.35s;
+}
+
+.characters__inner img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.characters__inner figcaption {
+  position: absolute;
+  height: 75px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  overflow: hidden;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.characters__inner h3 {
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 24px;
+  margin: 3px 0;
+  padding-bottom: 1rem;
+}
+
+.characters__inner p {
+  font-size: 1.6rem;
+  margin-top: 3rem;
+  font-weight: 500;
+}
+.characters__inner:hover figcaption {
+  height: calc(85%);
+}
