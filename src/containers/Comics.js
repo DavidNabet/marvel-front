@@ -7,7 +7,7 @@ const Comics = ({ title }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(1);
-  const [limit, setLimit] = useState(20);
+  const [limit, setLimit] = useState(24);
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("http://localhost:3200/comics", {
@@ -40,9 +40,7 @@ const Comics = ({ title }) => {
               />
               <div className="comics_details">
                 <h3>{result.title}</h3>
-                {result.description !== null && (
-                  <p>{decodeURIComponent(result.description)}</p>
-                )}
+                {result.description !== null && <p>{result.description}</p>}
               </div>
             </div>
           );
