@@ -1,7 +1,17 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../components/Pagination";
 
-const Characters = ({ data, isLoading, skip, setSkip, limit, count }) => {
+const Characters = ({
+  data,
+  isLoading,
+  skip,
+  setSkip,
+  limit,
+  count,
+  addToFavorites,
+}) => {
+  const [faStar, setFaStar] = useState("fas fa-star");
   return isLoading ? (
     <span>En cours de chargement...</span>
   ) : (
@@ -10,6 +20,9 @@ const Characters = ({ data, isLoading, skip, setSkip, limit, count }) => {
         {data.map((result) => {
           return (
             <figure key={result._id} className="characters__inner">
+              <span id="pos_star" onClick={() => addToFavorites(result)}>
+                <i className="far fa-star"></i>
+              </span>
               <Link to={`/character/${result._id}`}>
                 <img
                   src={`${result.thumbnail.path}.${result.thumbnail.extension}`}

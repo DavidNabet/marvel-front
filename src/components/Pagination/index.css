@@ -11,7 +11,8 @@
 .characters_pagination button,
 .comics_pagination button,
 .connect_container .signup,
-.connect_container .login {
+.connect_container .login,
+.connect_container .disconnect {
   position: relative;
   padding: 1.2rem 2.6rem;
   font-weight: 500;
@@ -29,7 +30,8 @@
 .characters_pagination button::before,
 .comics_pagination button::before,
 .connect_container .signup::before,
-.connect_container .login::before {
+.connect_container .login::before,
+.connect_container .disconnect::before {
   position: absolute;
   content: "";
   top: 0;

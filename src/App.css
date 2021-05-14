@@ -108,6 +108,7 @@ header {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .connect_container button {
@@ -115,6 +116,15 @@ header {
 }
 .connect_container .login {
   margin-right: 0;
+}
+
+.connect_container .disconnect {
+  padding: 0.8rem 0.5rem;
+  font-size: inherit;
+}
+
+.connect_container span {
+  width: 100px;
 }
 
 /* CHARACTERS - HOME / COMICS */
@@ -145,6 +155,16 @@ header {
   text-align: left;
   font-size: 1.6rem;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+.characters__inner #pos_star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: xx-large;
+  cursor: pointer;
+  color: var(--red);
+  z-index: 5;
 }
 
 .characters__inner a {
@@ -289,4 +309,67 @@ header {
   overflow: hidden;
   text-overflow: ellipsis;
   height: 10rem;
+}
+
+/* Signup / Login  */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5rem auto 0;
+}
+
+.form_signup h2,
+.form_login h2 {
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  font-size: 2.6rem;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.form_signup,
+.form_login {
+  width: 275px;
+  margin: auto;
+  outline: none;
+  font-size: 1.6rem;
+}
+
+.form_signup input:not(input[type="submit"]),
+.form_login input:not(input[type="submit"]) {
+  width: 100%;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  outline: none;
+  border-radius: 5px;
+  color: #999;
+  border: 1px solid rgba(84, 84, 84, 0.32);
+  padding: 0.8rem 0.5rem;
+  background-color: #fff;
+}
+
+.form_signup input[type="submit"],
+.form_login input[type="submit"] {
+  width: 100%;
+  background-color: var(--red);
+  border: none;
+  color: #fff;
+  padding: 1.2rem 0.5rem;
+  margin: 1rem 0;
+  font-size: 1.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form .invalid-feedback {
+  color: var(--red);
+  margin: 1rem 0;
+}
+
+.form a {
+  color: var(--red);
+  font-size: 1.3rem;
+  margin-top: 1rem;
+  text-decoration: none;
 }
