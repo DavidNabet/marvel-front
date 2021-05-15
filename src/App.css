@@ -129,9 +129,7 @@ header {
 
 /* CHARACTERS - HOME / COMICS */
 
-.characters_wrapper,
-.character_wrapper,
-.comics_wrapper {
+.body_wrapper {
   background-color: var(--lightgrey);
   padding-top: 3rem;
 }
@@ -163,8 +161,15 @@ header {
   left: 0;
   font-size: xx-large;
   cursor: pointer;
-  color: var(--red);
   z-index: 5;
+}
+
+.star {
+  color: #999;
+}
+
+.starRed {
+  color: var(--red);
 }
 
 .characters__inner a {
@@ -312,12 +317,47 @@ header {
 .comics__inner .comics_details p {
   line-height: 1.4;
   font-size: 1.5rem;
+}
+
+.comics__inner .comics_details .hidden {
   overflow: hidden;
   text-overflow: ellipsis;
   height: 10rem;
 }
 
-/* Signup / Login  */
+/* BOOKMARK */
+.row {
+  padding: 0 3.2rem;
+}
+.bookmark_container {
+  display: flex;
+}
+
+.bookmark_container .bookmark_character,
+.bookmark_container .bookmark_comics {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  border-right: 1px solid var(--black);
+}
+
+.bookmark_container .bookmark_comics {
+  border: none;
+}
+
+.bookmark_character > p,
+.bookmark_comics > p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #999;
+}
+
+/* SIGNUP / LOGIN  */
 .form {
   display: flex;
   flex-direction: column;

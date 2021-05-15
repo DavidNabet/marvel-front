@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
-import Cookies from "js-cookie";
+import CharacterCard from "../components/CharacterCard";
 
 const Characters = ({
   data,
@@ -12,29 +11,19 @@ const Characters = ({
   count,
   addToFavorite,
 }) => {
-  const [faStar, setFaStar] = useState("fas fa-star");
   return isLoading ? (
     <span>En cours de chargement...</span>
   ) : (
-    <div className="characters_wrapper">
+    <div className="body_wrapper">
       <div className="container characters_container">
-        {data.map((result) => {
+        {data.map((result, i) => {
           return (
-            <figure key={result._id} className="characters__inner">
-              <span id="pos_star" onClick={() => addToFavorite(result)}>
-                <i className="far fa-star"></i>
-              </span>
-              <Link to={`/character/${result._id}`}>
-                <img
-                  src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
-                  alt=""
-                />
-                <figcaption>
-                  <h3>{result.name}</h3>
-                  {result.description && <p>{result.description}</p>}
-                </figcaption>
-              </Link>
-            </figure>
+            <CharacterCard
+              key={i}
+              id={result._id}
+              result={result}
+              addToFavorite={addToFavorite}
+            />
           );
         })}
       </div>

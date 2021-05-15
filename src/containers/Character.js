@@ -22,7 +22,7 @@ const Character = () => {
   return isLoading ? (
     <span>Chargement en cours...</span>
   ) : (
-    <div className="character_wrapper">
+    <div className="body_wrapper">
       <div className="container character_container">
         <div className="character_image">
           <img

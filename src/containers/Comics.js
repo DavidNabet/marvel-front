@@ -33,7 +33,7 @@ const Comics = ({ title, addToFavorite }) => {
   return isLoading ? (
     <span>En cours de chargement...</span>
   ) : (
-    <div className="comics_wrapper">
+    <div className="body_wrapper">
       <div className="container comics_container">
         {data.map((result) => {
           return (
@@ -47,7 +47,9 @@ const Comics = ({ title, addToFavorite }) => {
               />
               <div className="comics_details">
                 <h3>{result.title}</h3>
-                {result.description !== null && <p>{result.description}</p>}
+                {result.description !== null && (
+                  <p className="hidden">{result.description}</p>
+                )}
               </div>
             </div>
           );

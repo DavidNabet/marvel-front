@@ -31,10 +31,8 @@ function App() {
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(20);
   // Favoris
-  const [favoritesTabPerso, setFavoritesTabPerso] = useState([]);
   const [favoritesTabComics, setFavoritesTabComics] = useState([]);
-
-  //
+  const [favoritesTabPerso, setFavoritesTabPerso] = useState([]);
   // la data des personnages
   useEffect(() => {
     const fetchData = async () => {
@@ -80,29 +78,34 @@ function App() {
 
   //
   const addToFavoritesPerso = (result) => {
+    // setFavoris(!favoris);
+
     // On fait une copie de la requête
     const newFavoritesPerso = [...favoritesTabPerso];
-    const exist = newFavoritesPerso.find((elem) => elem._id === result._id);
-    // Est ce que result n'existe pas déjà dans les favoris ?
-    console.log("exist ", exist);
-    if (exist) {
-      newFavoritesPerso.splice(result, 1);
-      setFavoritesTabPerso(newFavoritesPerso);
+    const existID = newFavoritesPerso.find((elem) => elem._id === result._id);
+    // Si ça existe dans le localStorage
 
+    // Est ce que result n'existe pas déjà dans les favoris ?
+    console.log("exist ", existID);
+    if (existID) {
+      const index = newFavoritesPerso.indexOf(existID);
+      newFavoritesPerso.splice(index, 1);
+      setFavoritesTabPerso(newFavoritesPerso);
+      localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
       console.log(newFavoritesPerso);
     } else {
-      newFavoritesPerso.push({ ...result, status: "character" });
+      newFavoritesPerso.push(result);
       setFavoritesTabPerso(newFavoritesPerso);
+      localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
       console.log(newFavoritesPerso);
     }
-
-    if (Cookies.getJSON("fav") === undefined) {
-      Cookies.set("fav", JSON.stringify([1, 2, 3]), {
-        expires: 7,
-      });
-    }
-    console.log(Cookies.getJSON("fav").character);
   };
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("favoris").length === 0) {
+  //     localStorage.removeItem("favoris");
+  //   }
+  // });
 
   const addToFavoritesComics = (result) => {
     // On fait une copie de la requête
@@ -111,13 +114,19 @@ function App() {
     // Est ce que result n'existe pas déjà dans les favoris ?
     console.log("exist ", exist);
     if (exist) {
-      newFavoritesComics.splice(result, 1);
+      const index = newFavoritesComics.indexOf(exist);
+      newFavoritesComics.splice(index, 1);
       setFavoritesTabComics(newFavoritesComics);
-
+      localStorage.setItem("favorisComics", JSON.stringify(newFavoritesComics));
+      if (localStorage.getItem("favoris").length < 1) {
+        localStorage.removeItem("favoris");
+      }
       console.log(newFavoritesComics);
     } else {
-      newFavoritesComics.push({ ...result, status: "comics" });
+      newFavoritesComics.push(result);
       setFavoritesTabComics(newFavoritesComics);
+      localStorage.setItem("favorisComics", JSON.stringify(newFavoritesComics));
+
       console.log(newFavoritesComics);
     }
   };
