@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../components/Pagination";
+import Cookies from "js-cookie";
 
-const Comics = ({ title }) => {
+const Comics = ({ title, addToFavorite }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [skip, setSkip] = useState(0);
@@ -10,13 +11,16 @@ const Comics = ({ title }) => {
   const [limit, setLimit] = useState(24);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3200/comics", {
-        params: {
-          title: title,
-          limit: limit,
-          skip: skip,
-        },
-      });
+      const response = await axios.get(
+        "https://marvel-back-project.herokuapp.com/comics",
+        {
+          params: {
+            title: title,
+            limit: limit,
+            skip: skip,
+          },
+        }
+      );
       console.log(response.data);
       setData(response.data.results);
       setLimit(response.data.limit);
@@ -34,6 +38,9 @@ const Comics = ({ title }) => {
         {data.map((result) => {
           return (
             <div key={result._id} className="comics__inner">
+              <span id="pos_star" onClick={() => addToFavorite(result)}>
+                <i className="far fa-star"></i>
+              </span>
               <img
                 src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
                 alt=""

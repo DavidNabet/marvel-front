@@ -157,7 +157,7 @@ header {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
-.characters__inner #pos_star {
+#pos_star {
   position: absolute;
   top: 0;
   left: 0;
@@ -280,11 +280,17 @@ header {
 
 /* COMICS PAGE */
 .comics__inner {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: 3rem;
   max-width: 200px;
   width: 100%;
+}
+
+.comics__inner #pos_star {
+  top: -16px;
+  left: -16px;
 }
 
 .comics__inner img {

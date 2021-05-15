@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../components/Pagination";
+import Cookies from "js-cookie";
 
 const Characters = ({
   data,
@@ -9,7 +10,7 @@ const Characters = ({
   setSkip,
   limit,
   count,
-  addToFavorites,
+  addToFavorite,
 }) => {
   const [faStar, setFaStar] = useState("fas fa-star");
   return isLoading ? (
@@ -20,7 +21,7 @@ const Characters = ({
         {data.map((result) => {
           return (
             <figure key={result._id} className="characters__inner">
-              <span id="pos_star" onClick={() => addToFavorites(result)}>
+              <span id="pos_star" onClick={() => addToFavorite(result)}>
                 <i className="far fa-star"></i>
               </span>
               <Link to={`/character/${result._id}`}>

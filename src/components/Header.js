@@ -9,8 +9,6 @@ const Header = ({
   setUserToken,
 }) => {
   const location = useLocation();
-  // const { token, account } = Cookies.getJSON("userToken");
-  // console.log(Cookies.getJSON("userToken"));
   return (
     <header>
       <div className="container header">

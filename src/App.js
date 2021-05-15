@@ -30,17 +30,24 @@ function App() {
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(20);
+  // Favoris
+  const [favoritesTabPerso, setFavoritesTabPerso] = useState([]);
+  const [favoritesTabComics, setFavoritesTabComics] = useState([]);
 
+  //
   // la data des personnages
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("http://localhost:3200/characters", {
-        params: {
-          name: searchName,
-          limit: limit,
-          skip: skip,
-        },
-      });
+      const response = await axios.get(
+        "https://marvel-back-project.herokuapp.com/characters",
+        {
+          params: {
+            name: searchName,
+            limit: limit,
+            skip: skip,
+          },
+        }
+      );
       console.log(response.data);
       setData(response.data.results);
       setLimit(response.data.limit);
@@ -60,7 +67,6 @@ function App() {
       setTokenUser(null);
     }
   };
-
   // les filtres de la searchbar
   const handleSearchName = (e) => {
     e.preventDefault();
@@ -72,17 +78,48 @@ function App() {
     setSearchTitle(e.target.value);
   };
 
-  const addToFavorites = (result) => {
+  //
+  const addToFavoritesPerso = (result) => {
     // On fait une copie de la requête
-    const newData = [...data];
-    // console.log(newData);
+    const newFavoritesPerso = [...favoritesTabPerso];
+    const exist = newFavoritesPerso.find((elem) => elem._id === result._id);
     // Est ce que result n'existe pas déjà dans les favoris ?
-    const exist = newData.find((elem) => elem._id === result._id);
-    console.log(exist);
-    console.log("result ", result);
-    // if(exist){
+    console.log("exist ", exist);
+    if (exist) {
+      newFavoritesPerso.splice(result, 1);
+      setFavoritesTabPerso(newFavoritesPerso);
 
-    // }
+      console.log(newFavoritesPerso);
+    } else {
+      newFavoritesPerso.push({ ...result, status: "character" });
+      setFavoritesTabPerso(newFavoritesPerso);
+      console.log(newFavoritesPerso);
+    }
+
+    if (Cookies.getJSON("fav") === undefined) {
+      Cookies.set("fav", JSON.stringify([1, 2, 3]), {
+        expires: 7,
+      });
+    }
+    console.log(Cookies.getJSON("fav").character);
+  };
+
+  const addToFavoritesComics = (result) => {
+    // On fait une copie de la requête
+    const newFavoritesComics = [...favoritesTabComics];
+    const exist = newFavoritesComics.find((elem) => elem._id === result._id);
+    // Est ce que result n'existe pas déjà dans les favoris ?
+    console.log("exist ", exist);
+    if (exist) {
+      newFavoritesComics.splice(result, 1);
+      setFavoritesTabComics(newFavoritesComics);
+
+      console.log(newFavoritesComics);
+    } else {
+      newFavoritesComics.push({ ...result, status: "comics" });
+      setFavoritesTabComics(newFavoritesComics);
+      console.log(newFavoritesComics);
+    }
   };
 
   return (
@@ -105,7 +142,7 @@ function App() {
             <Login setUserToken={setUserToken} />
           </Route>
           <Route path="/comics">
-            <Comics title={searchTitle} />
+            <Comics title={searchTitle} addToFavorite={addToFavoritesComics} />
           </Route>
           <Route path="/bookmark">
             {tokenUser ? <Bookmark /> : <Redirect to="/login" />}
@@ -115,8 +152,8 @@ function App() {
               <Characters
                 data={data}
                 isLoading={isLoading}
-                addToFavorites={addToFavorites}
                 skip={skip}
+                addToFavorite={addToFavoritesPerso}
                 setSkip={setSkip}
                 limit={limit}
                 count={count}

@@ -13,11 +13,14 @@ const Signup = ({ setUserToken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3200/user/signup", {
-        username: username,
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "https://marvel-back-project.herokuapp.com/user/signup",
+        {
+          username: username,
+          email: email,
+          password: password,
+        }
+      );
       if (response.data) {
         obj.token = response.data.token;
         obj.username = response.data.username;
