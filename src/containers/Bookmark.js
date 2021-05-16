@@ -55,7 +55,7 @@ const Bookmark = () => {
             ) : comics === null || comics.length === 0 ? (
               <p>
                 <span>
-                  Vous ne possédez pas de favoris dans la section Personnages
+                  Vous ne possédez pas de favoris dans la section Comics
                 </span>
               </p>
             ) : null}
