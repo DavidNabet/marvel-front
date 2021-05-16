@@ -59,7 +59,7 @@ function App() {
   //le tokenUser
   const setUserToken = (object) => {
     if (object) {
-      Cookies.set("userToken", object, { expires: 7 });
+      Cookies.set("userToken", object, { expires: 7, secure: true });
       setTokenUser(object);
     } else {
       Cookies.remove("userToken");
