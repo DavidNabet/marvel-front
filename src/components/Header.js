@@ -38,6 +38,7 @@ const Header = ({
             </ul>
           </nav>
         ) : null}
+        {/* Cache la searchBar pour toutes les pages sauf comics ou la home */}
         {location.pathname === "/comics" ? (
           <form className="search_container">
             <input

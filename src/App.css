@@ -159,17 +159,19 @@ header {
   position: absolute;
   top: 0;
   left: 0;
-  font-size: xx-large;
+  /* font-size: xx-large; */
   cursor: pointer;
   z-index: 5;
+  width: 4rem;
+  height: auto;
 }
 
 .star {
-  color: #999;
+  fill: #999;
 }
 
 .starRed {
-  color: var(--red);
+  fill: var(--red);
 }
 
 .characters__inner a {
@@ -316,13 +318,7 @@ header {
 
 .comics__inner .comics_details p {
   line-height: 1.4;
-  font-size: 1.5rem;
-}
-
-.comics__inner .comics_details .hidden {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 10rem;
+  font-size: 1.6rem;
 }
 
 /* BOOKMARK */
@@ -338,11 +334,6 @@ header {
   display: flex;
   flex-wrap: wrap;
   flex: 1;
-  border-right: 1px solid var(--black);
-}
-
-.bookmark_container .bookmark_comics {
-  border: none;
 }
 
 .bookmark_character > p,
@@ -389,7 +380,6 @@ header {
   font-size: 1.6rem;
   outline: none;
   border-radius: 5px;
-  color: #999;
   border: 1px solid rgba(84, 84, 84, 0.32);
   padding: 0.8rem 0.5rem;
   background-color: #fff;

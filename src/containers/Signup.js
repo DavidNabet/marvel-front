@@ -13,6 +13,8 @@ const Signup = ({ setUserToken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      //On reset setErrorMessage pour annuler l'erreur
+      setErrorMessage("");
       const response = await axios.post(
         "https://marvel-back-project.herokuapp.com/user/signup",
         {
@@ -29,9 +31,13 @@ const Signup = ({ setUserToken }) => {
         history.push("/");
       }
     } catch (error) {
-      console.log(error.response.data);
+      // On affiche tous les messages d'erreurs présents côté serveur
       if (error.response.status === 409) {
         setErrorMessage("Cet email possède déjà un compte");
+      } else if (
+        error.response.data.message === "This username is already used"
+      ) {
+        setErrorMessage("Ce Pseudo existe déjà");
       } else {
         setErrorMessage("Une erreur est survenue");
       }
@@ -45,7 +51,7 @@ const Signup = ({ setUserToken }) => {
       <input
         type="text"
         value={username}
-        placeholder="Prénom"
+        placeholder="Pseudo"
         onChange={(e) => setUsername(e.target.value)}
       />
       <input

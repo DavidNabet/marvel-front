@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import Pagination from "../components/Pagination";
 import CharacterCard from "../components/CharacterCard";
+import { BallSpinner } from "react-spinners-kit";
 
 const Characters = ({
   data,
@@ -12,7 +12,7 @@ const Characters = ({
   addToFavorite,
 }) => {
   return isLoading ? (
-    <span>En cours de chargement...</span>
+    <BallSpinner size={30} color="#ed1d24" loading={isLoading} />
   ) : (
     <div className="body_wrapper">
       <div className="container characters_container">

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { BallSpinner } from "react-spinners-kit";
 
 const Character = () => {
   const { id } = useParams();
@@ -19,10 +20,11 @@ const Character = () => {
     fetchData();
   }, [id]);
 
+  // Au chargement de la page, on affiche un loader, si les données sont bien chargées on affiche la page
   return isLoading ? (
-    <span>Chargement en cours...</span>
+    <BallSpinner size={30} color="#ed1d24" loading={isLoading} />
   ) : (
-    <div className="body_wrapper">
+    <div className="body_wrapper" style={{ height: "100vh" }}>
       <div className="container character_container">
         <div className="character_image">
           <img

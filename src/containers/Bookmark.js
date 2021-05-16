@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-
 const Bookmark = () => {
+  //Si les données du localStorage sont supprimé alors on renvoie un message
   let characters = localStorage.getItem("favoris")
     ? JSON.parse(localStorage.getItem("favoris"))
     : [];
@@ -12,7 +11,8 @@ const Bookmark = () => {
       <div
         className="body_wrapper"
         style={{
-          height: window.innerHeight < 600 ? "calc(100vh - 60px)" : "auto",
+          height:
+            window.innerHeight < window.screenTop ? "calc(100vh)" : "auto",
         }}
       >
         <div className="row bookmark_container">

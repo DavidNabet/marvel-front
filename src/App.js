@@ -15,25 +15,27 @@ import {
   Login,
   Signup,
 } from "./containers";
-
 import Cookies from "js-cookie";
 import "./App.css";
 
 function App() {
+  // Le token du user sauvegardé dans un cookie
   const [tokenUser, setTokenUser] = useState(
     Cookies.getJSON("userToken") || null
   );
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  // Recherche sur la searchBar
   const [searchName, setSearchName] = useState("");
   const [searchTitle, setSearchTitle] = useState("");
+  // Pagination
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(20);
   // Favoris
-  const [favoritesTabComics, setFavoritesTabComics] = useState([]);
   const [favoritesTabPerso, setFavoritesTabPerso] = useState([]);
-  // la data des personnages
+  const [favoritesTabComics, setFavoritesTabComics] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
@@ -46,7 +48,6 @@ function App() {
           },
         }
       );
-      console.log(response.data);
       setData(response.data.results);
       setLimit(response.data.limit);
       setCount(response.data.count);
@@ -76,58 +77,53 @@ function App() {
     setSearchTitle(e.target.value);
   };
 
-  //
-  const addToFavoritesPerso = (result) => {
-    // setFavoris(!favoris);
-
-    // On fait une copie de la requête
-    const newFavoritesPerso = [...favoritesTabPerso];
-    const existID = newFavoritesPerso.find((elem) => elem._id === result._id);
-    // Si ça existe dans le localStorage
-
-    // Est ce que result n'existe pas déjà dans les favoris ?
-    console.log("exist ", existID);
-    if (existID) {
-      const index = newFavoritesPerso.indexOf(existID);
-      newFavoritesPerso.splice(index, 1);
-      setFavoritesTabPerso(newFavoritesPerso);
-      localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
-      console.log(newFavoritesPerso);
-    } else {
-      newFavoritesPerso.push(result);
-      setFavoritesTabPerso(newFavoritesPerso);
-      localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
-      console.log(newFavoritesPerso);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("favoris").length === 0) {
-  //     localStorage.removeItem("favoris");
-  //   }
-  // });
-
-  const addToFavoritesComics = (result) => {
-    // On fait une copie de la requête
-    const newFavoritesComics = [...favoritesTabComics];
-    const exist = newFavoritesComics.find((elem) => elem._id === result._id);
-    // Est ce que result n'existe pas déjà dans les favoris ?
-    console.log("exist ", exist);
-    if (exist) {
-      const index = newFavoritesComics.indexOf(exist);
-      newFavoritesComics.splice(index, 1);
-      setFavoritesTabComics(newFavoritesComics);
-      localStorage.setItem("favorisComics", JSON.stringify(newFavoritesComics));
-      if (localStorage.getItem("favoris").length < 1) {
-        localStorage.removeItem("favoris");
+  // Ajouter/ Supprimer un favoris
+  const addToFavorite = (e, from, result) => {
+    e.preventDefault();
+    if (from === "character") {
+      // Si la page charge les données des personnages
+      const newFavoritesPerso = [...favoritesTabPerso];
+      const exist = newFavoritesPerso.find((elem) => elem._id === result._id);
+      // Est ce que result n'existe pas déjà dans les favoris ?
+      if (exist) {
+        const index = newFavoritesPerso.indexOf(exist);
+        newFavoritesPerso.splice(index, 1);
+        // S'il existe, on peut retirer le favori de la mémoire du navigateur
+        setFavoritesTabPerso(newFavoritesPerso);
+        localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
+        console.log(newFavoritesPerso);
+      } else {
+        // envoie le résultat dans un tableau qui à son tour sera envoyé dans la mémoire du navigateur
+        newFavoritesPerso.push(result);
+        setFavoritesTabPerso(newFavoritesPerso);
+        localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
+        console.log(newFavoritesPerso);
       }
-      console.log(newFavoritesComics);
     } else {
-      newFavoritesComics.push(result);
-      setFavoritesTabComics(newFavoritesComics);
-      localStorage.setItem("favorisComics", JSON.stringify(newFavoritesComics));
+      const newFavoritesComics = [...favoritesTabComics];
+      const existComics = newFavoritesComics.find(
+        (elem) => elem._id === result._id
+      );
+      console.log("existComics ", existComics);
+      if (existComics) {
+        const indexComic = newFavoritesComics.indexOf(existComics);
+        newFavoritesComics.splice(indexComic, 1);
+        setFavoritesTabComics(newFavoritesComics);
+        localStorage.setItem(
+          "favorisComics",
+          JSON.stringify(newFavoritesComics)
+        );
+        console.log(newFavoritesComics);
+      } else {
+        newFavoritesComics.push(result);
+        setFavoritesTabComics(newFavoritesComics);
+        localStorage.setItem(
+          "favorisComics",
+          JSON.stringify(newFavoritesComics)
+        );
 
-      console.log(newFavoritesComics);
+        console.log(newFavoritesComics);
+      }
     }
   };
 
@@ -151,7 +147,11 @@ function App() {
             <Login setUserToken={setUserToken} />
           </Route>
           <Route path="/comics">
-            <Comics title={searchTitle} addToFavorite={addToFavoritesComics} />
+            {tokenUser ? (
+              <Comics title={searchTitle} addToFavorite={addToFavorite} />
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
           <Route path="/bookmark">
             {tokenUser ? <Bookmark /> : <Redirect to="/login" />}
@@ -162,7 +162,7 @@ function App() {
                 data={data}
                 isLoading={isLoading}
                 skip={skip}
-                addToFavorite={addToFavoritesPerso}
+                addToFavorite={addToFavorite}
                 setSkip={setSkip}
                 limit={limit}
                 count={count}

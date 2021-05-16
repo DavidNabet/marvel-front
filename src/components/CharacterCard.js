@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import StarIcon from "./StarIcon";
 
 const CharacterCard = ({ id, result, addToFavorite }) => {
   const [favoris, setFavoris] = useState("star");
@@ -14,19 +15,19 @@ const CharacterCard = ({ id, result, addToFavorite }) => {
     } else {
       localStorage.removeItem("favoris");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   return (
     <figure className="characters__inner">
       <span
         id="pos_star"
-        className={favoris ? "star" : "starRed"}
-        onClick={() => {
-          addToFavorite(result);
+        onClick={(e) => {
+          addToFavorite(e, "character", result);
           setFavoris(!favoris);
         }}
       >
-        <i className="far fa-star"></i>
+        <StarIcon className={favoris ? "star" : "starRed"} />
       </span>
       <Link to={`/character/${result._id}`}>
         <img
@@ -35,7 +36,11 @@ const CharacterCard = ({ id, result, addToFavorite }) => {
         />
         <figcaption>
           <h3>{result.name}</h3>
-          {result.description && <p>{result.description}</p>}
+          {result.description ? (
+            <p>{result.description}</p>
+          ) : (
+            <p>Aucune description</p>
+          )}
         </figcaption>
       </Link>
     </figure>

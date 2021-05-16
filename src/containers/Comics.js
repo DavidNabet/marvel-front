@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../components/Pagination";
-import Cookies from "js-cookie";
+import ComicCard from "../components/ComicCard";
+import { BallSpinner } from "react-spinners-kit";
 
 const Comics = ({ title, addToFavorite }) => {
   const [data, setData] = useState();
@@ -9,6 +10,7 @@ const Comics = ({ title, addToFavorite }) => {
   const [skip, setSkip] = useState(0);
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(24);
+  //On affiche les données des comics
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
@@ -31,27 +33,18 @@ const Comics = ({ title, addToFavorite }) => {
   }, [title, skip, limit]);
 
   return isLoading ? (
-    <span>En cours de chargement...</span>
+    <BallSpinner size={30} color="#ed1d24" loading={isLoading} />
   ) : (
     <div className="body_wrapper">
       <div className="container comics_container">
         {data.map((result) => {
           return (
-            <div key={result._id} className="comics__inner">
-              <span id="pos_star" onClick={() => addToFavorite(result)}>
-                <i className="far fa-star"></i>
-              </span>
-              <img
-                src={`${result.thumbnail.path}.${result.thumbnail.extension}`}
-                alt=""
-              />
-              <div className="comics_details">
-                <h3>{result.title}</h3>
-                {result.description !== null && (
-                  <p className="hidden">{result.description}</p>
-                )}
-              </div>
-            </div>
+            <ComicCard
+              key={result._id}
+              id={result._id}
+              result={result}
+              addToFavorite={addToFavorite}
+            />
           );
         })}
       </div>

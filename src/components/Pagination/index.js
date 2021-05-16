@@ -20,19 +20,19 @@ const Pagination = ({ limit, count, setSkip, skip }) => {
   return (
     <>
       <button className="" onClick={() => setSkip(0)}>
-        First Page
+        Première Page
       </button>
       <button className="" onClick={prevPage}>
-        Previous
+        Précédent
       </button>
       <span>
         {Math.ceil(skip / limit) + 1} / {totalPage} pages
       </span>
       <button className="" onClick={nextPage}>
-        Next
+        Suivant
       </button>
       <button className="" onClick={() => setSkip(nbrePage)}>
-        Last Page
+        Dernière Page
       </button>
     </>
   );

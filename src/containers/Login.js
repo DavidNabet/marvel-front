@@ -20,15 +20,18 @@ const Login = ({ setUserToken }) => {
         }
       );
       if (response.data) {
+        //On met dans un objet le token et le username qu'on pourra réutiliser par la suite dans le header
         obj.token = response.data.token;
         obj.username = response.data.username;
         setUserToken(obj);
         history.push("/");
       }
     } catch (error) {
-      console.log(error.response);
+      // On cherche si l'erreur existe côté serveur
       if (error.response.status === 401) {
         setErrorMessage("Mauvais email et/ou mot de passe");
+      } else {
+        setErrorMessage("Une erreur est survenue");
       }
       console.log(error.message);
     }
