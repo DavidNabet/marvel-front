@@ -1,8 +1,6 @@
 # Marvel React App
 
-## General info
-
-The project was completed in 3 days from an api Marvel. We retrieve the data and display it.
+> The project was completed in 3 days from an api Marvel. We retrieve the data and display it.
 
 ## Site composition
 
