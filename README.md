@@ -20,11 +20,12 @@
 ## Preview
 
 ### Signup
-
-### Characters
-
-### Character
-
+![signup](https://res.cloudinary.com/dkigh7ogm/image/upload/v1625058223/marvel/register.png)
+### Personnages
+![characters](https://res.cloudinary.com/dkigh7ogm/image/upload/v1625058233/marvel/characters.png)
+### Perso
+![character](https://res.cloudinary.com/dkigh7ogm/image/upload/v1625058233/marvel/character.png)
 ### Comics
-
-### Bookmark
+![comics](https://res.cloudinary.com/dkigh7ogm/image/upload/v1625058233/marvel/comics.png)
+### Favoris
+![bookmark](https://res.cloudinary.com/dkigh7ogm/image/upload/v1625058233/marvel/favoris.png)
