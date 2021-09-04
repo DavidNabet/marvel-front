@@ -3,6 +3,7 @@ import StarIcon from "./StarIcon";
 
 const ComicCard = ({ id, result, addToFavorite }) => {
   const [favoris, setFavoris] = useState("star");
+  const text = result.description?.slice(0, 100) + "...";
 
   useEffect(() => {
     if (localStorage.getItem("favorisComics") !== null) {
@@ -37,7 +38,7 @@ const ComicCard = ({ id, result, addToFavorite }) => {
       <div className="comics_details">
         <h3>{result.title}</h3>
         {result.description ? (
-          <p>{result.description.slice(0, 50) + "..."}</p>
+          <p dangerouslySetInnerHTML={{ __html: text }}></p>
         ) : (
           <p style={{ textAlign: "center" }}>Aucune description</p>
         )}
