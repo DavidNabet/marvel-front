@@ -3,7 +3,7 @@ import StarIcon from "./StarIcon";
 
 const ComicCard = ({ id, result, addToFavorite }) => {
 	const [favoris, setFavoris] = useState("star");
-	const text = result.description?.slice(0, 100) + "...";
+	const text = result.description?.slice(0, 250) + "...";
 
 	useEffect(() => {
 		if (localStorage.getItem("favorisComics") !== null) {
@@ -18,7 +18,7 @@ const ComicCard = ({ id, result, addToFavorite }) => {
 			localStorage.removeItem("favorisComics");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [id]);
 
 	return (
 		<figure className="characters__inner">
@@ -37,8 +37,9 @@ const ComicCard = ({ id, result, addToFavorite }) => {
 					alt=""
 				/>
 				<figcaption>
+					<h3>{result.title}</h3>
 					{result.description ? (
-						<p>{result.description.slice(0, 300) + "..."}</p>
+						<p dangerouslySetInnerHTML={{ __html: text }} />
 					) : (
 						<p style={{ textAlign: "center" }}>Aucune description</p>
 					)}
