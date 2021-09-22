@@ -3,6 +3,7 @@ import StarIcon from "./StarIcon";
 
 const ComicCard = ({ id, result, addToFavorite }) => {
 	const [favoris, setFavoris] = useState("star");
+	const text = result.description?.slice(0, 100) + "...";
 
 	useEffect(() => {
 		if (localStorage.getItem("favorisComics") !== null) {
