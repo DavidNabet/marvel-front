@@ -11,7 +11,8 @@ const Character = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `https://marvel-back-project.herokuapp.com/comics/${id}`
+        // `https://marvel-back-project.herokuapp.com/comics/${id}`
+        `https://marvel-back.vercel.app/comics/${id}`
       );
       console.log(response);
       setData(response.data);

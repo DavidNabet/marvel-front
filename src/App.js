@@ -39,7 +39,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        "https://marvel-back-project.herokuapp.com/characters",
+        // "https://marvel-back-project.herokuapp.com/characters",
+        "https://marvel-back.vercel.app/characters",
         {
           params: {
             name: searchName,
