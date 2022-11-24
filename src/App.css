@@ -161,7 +161,7 @@ header {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 
-#pos_star {
+.pos_star {
     position: absolute;
     top: 0;
     left: 0;

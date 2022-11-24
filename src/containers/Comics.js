@@ -4,7 +4,7 @@ import Pagination from "../components/Pagination";
 import ComicCard from "../components/ComicCard";
 import { BallSpinner } from "react-spinners-kit";
 
-const Comics = ({ title, addToFavorite }) => {
+const Comics = ({ title, addFav, removeFav }) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [skip, setSkip] = useState(0);
@@ -14,8 +14,8 @@ const Comics = ({ title, addToFavorite }) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        // "https://marvel-back-project.herokuapp.com/comics",
         "https://marvel-back.vercel.app/comics",
+        // "http://localhost:3200/comics",
         {
           params: {
             title: title,
@@ -41,10 +41,12 @@ const Comics = ({ title, addToFavorite }) => {
         {data.map((result) => {
           return (
             <ComicCard
-              key={result._id}
-              id={result._id}
+              heart
+              key={result?._id}
+              id={result?._id}
               result={result}
-              addToFavorite={addToFavorite}
+              addFav={addFav}
+              removeFav={removeFav}
             />
           );
         })}

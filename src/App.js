@@ -33,14 +33,14 @@ function App() {
   const [count, setCount] = useState(1);
   const [limit, setLimit] = useState(20);
   // Favoris
-  const [favoritesTabPerso, setFavoritesTabPerso] = useState([]);
-  const [favoritesTabComics, setFavoritesTabComics] = useState([]);
+  let cookie = Cookies.get("fav");
+  const [fav, setFav] = useState((cookie && JSON.parse(cookie)) || [[], []]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        // "https://marvel-back-project.herokuapp.com/characters",
         "https://marvel-back.vercel.app/characters",
+        // "http://localhost:3200/characters",
         {
           params: {
             name: searchName,
@@ -79,53 +79,46 @@ function App() {
   };
 
   // Ajouter/ Supprimer un favoris
-  const addToFavorite = (e, from, result) => {
-    e.preventDefault();
-    if (from === "character") {
-      // Si la page charge les données des personnages
-      const newFavoritesPerso = [...favoritesTabPerso];
-      const exist = newFavoritesPerso.find((elem) => elem._id === result._id);
-      // Est ce que result n'existe pas déjà dans les favoris ?
-      if (exist) {
-        const index = newFavoritesPerso.indexOf(exist);
-        newFavoritesPerso.splice(index, 1);
-        // S'il existe, on peut retirer le favori de la mémoire du navigateur
-        setFavoritesTabPerso(newFavoritesPerso);
-        localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
-        console.log(newFavoritesPerso);
+  const addFav = (id, from) => {
+    let favCopy = [...fav];
+    if (from === "char") {
+      if (favCopy[0].indexOf(id) === -1) {
+        favCopy[0].push(id);
+        alert("Favoris ajouté !");
       } else {
-        // envoie le résultat dans un tableau qui à son tour sera envoyé dans la mémoire du navigateur
-        newFavoritesPerso.push(result);
-        setFavoritesTabPerso(newFavoritesPerso);
-        localStorage.setItem("favoris", JSON.stringify(newFavoritesPerso));
-        console.log(newFavoritesPerso);
+        alert("Déjà en favoris !");
       }
+    } else if (favCopy[1].indexOf(id) === -1) {
+      favCopy[1].push(id);
+      alert("Favoris ajouté !");
     } else {
-      const newFavoritesComics = [...favoritesTabComics];
-      const existComics = newFavoritesComics.find(
-        (elem) => elem._id === result._id
-      );
-      console.log("existComics ", existComics);
-      if (existComics) {
-        const indexComic = newFavoritesComics.indexOf(existComics);
-        newFavoritesComics.splice(indexComic, 1);
-        setFavoritesTabComics(newFavoritesComics);
-        localStorage.setItem(
-          "favorisComics",
-          JSON.stringify(newFavoritesComics)
-        );
-        console.log(newFavoritesComics);
-      } else {
-        newFavoritesComics.push(result);
-        setFavoritesTabComics(newFavoritesComics);
-        localStorage.setItem(
-          "favorisComics",
-          JSON.stringify(newFavoritesComics)
-        );
+      alert("Déjà en favoris !");
+    }
 
-        console.log(newFavoritesComics);
+    setFav(favCopy);
+    Cookies.set("fav", JSON.stringify(favCopy));
+  };
+
+  const handleRemoveFav = (id) => {
+    const fav = Cookies.get("fav");
+    const tabFav = fav && JSON.parse(fav);
+
+    let newFav = [[], []];
+    for (let i = 0; i < tabFav.length; i++) {
+      for (let j = 0; j < tabFav[i].length; j++) {
+        if (i === 0) {
+          if (tabFav[i][j] !== id) {
+            newFav[0].push(tabFav[i][j]);
+          }
+        } else {
+          if (tabFav[i][j] !== id) {
+            newFav[1].push(tabFav[i][j]);
+          }
+        }
       }
     }
+    setFav(newFav);
+    Cookies.set("fav", JSON.stringify(newFav));
   };
 
   return (
@@ -149,13 +142,21 @@ function App() {
           </Route>
           <Route path="/comics">
             {tokenUser ? (
-              <Comics title={searchTitle} addToFavorite={addToFavorite} />
+              <Comics
+                title={searchTitle}
+                addFav={addFav}
+                removeFav={handleRemoveFav}
+              />
             ) : (
               <Redirect to="/login" />
             )}
           </Route>
           <Route path="/bookmark">
-            {tokenUser ? <Bookmark /> : <Redirect to="/login" />}
+            {tokenUser ? (
+              <Bookmark removeFav={handleRemoveFav} fav={fav} />
+            ) : (
+              <Redirect to="/login" />
+            )}
           </Route>
           <Route exact path="/">
             {tokenUser ? (
@@ -163,7 +164,8 @@ function App() {
                 data={data}
                 isLoading={isLoading}
                 skip={skip}
-                addToFavorite={addToFavorite}
+                addFav={addFav}
+                removeFav={handleRemoveFav}
                 setSkip={setSkip}
                 limit={limit}
                 count={count}

@@ -16,8 +16,8 @@ const Signup = ({ setUserToken }) => {
       //On reset setErrorMessage pour annuler l'erreur
       setErrorMessage("");
       const response = await axios.post(
-        // "https://marvel-back-project.herokuapp.com/user/signup",
         "https://marvel-back.vercel.app/user/signup",
+        // "http://localhost:3200/user/signup",
         {
           username: username,
           email: email,

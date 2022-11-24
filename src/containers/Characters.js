@@ -9,7 +9,8 @@ const Characters = ({
   setSkip,
   limit,
   count,
-  addToFavorite,
+  addFav,
+  removeFav,
 }) => {
   return isLoading ? (
     <BallSpinner size={30} color="#ed1d24" loading={isLoading} />
@@ -22,7 +23,9 @@ const Characters = ({
               key={i}
               id={result._id}
               result={result}
-              addToFavorite={addToFavorite}
+              addFav={addFav}
+              removeFav={removeFav}
+              heart
             />
           );
         })}
