@@ -37,6 +37,8 @@ function App() {
   const [fav, setFav] = useState((cookie && JSON.parse(cookie)) || [[], []]);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     const fetchData = async () => {
       const response = await axios.get(
         "https://marvel-back.vercel.app/characters",
@@ -47,6 +49,7 @@ function App() {
             limit: limit,
             skip: skip,
           },
+          signal,
         }
       );
       setData(response.data.results);
@@ -55,6 +58,10 @@ function App() {
       setIsLoading(false);
     };
     fetchData();
+
+    return () => {
+      controller.abort();
+    };
   }, [searchName, skip, limit]);
 
   //le tokenUser
